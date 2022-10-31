@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <label for="frameMaximum">Shown on row: </label>
+    <input type="text" id="frameMaximum">
+    <input type="button" value="update" onclick="updateGrid()">
+
+    <div class="body" id="placement"></div>
+</body>
+</html>
+
+<script>
+    // add a div object
+    function addElement(givenId) {
+        // create a new div element
+        let firstDiv = document.createElement("div");
+        firstDiv.className = "item item" + givenId;
+
+        // we want to place our form part right here
+        // we start by making a new div
+        let secondDiv = document.createElement("div");
+        secondDiv.className = "formPart formPart" + givenId;
+        // make a input field where we set our ip later on
+        let formInput  = document.createElement("input");
+        formInput.placeholder   = "url/ip";
+        formInput.id            = "ipTarget" + givenId;
+        formInput.className     = "ipTarget ipTarget" + givenId;
+        formInput.type          = "text";
+        // make a button that we can click on to send the ip
+        let formButton = document.createElement("button");
+        formButton.innerHTML = "show me";
+        formButton.addEventListener ("click", function() {
+            getFrame(givenId);
+        });
+        // add both form parts to the second div
+        secondDiv.appendChild(formInput);
+        secondDiv.appendChild(formButton);
+        // add the second div to the first div
+        firstDiv.appendChild(secondDiv);
+
+        // add <hr> to div
+        firstDiv.appendChild(document.createElement("hr"));
+
+        // re-use the second div for another div now for iframe
+        secondDiv = document.createElement("div");
+        secondDiv.className = "framePart framePart" + givenId;
+        // make a new <iframe>
+        myIframe = document.createElement("iframe");
+        myIframe.className  = "frame frame" + givenId;
+        myIframe.id         = "piViewer" + givenId;
+        myIframe.height     = 200;
+        myIframe.width      = 300;
+        // add <iframe> to second div
+        secondDiv.appendChild(myIframe);
+
+
+
+        // add the second div to the first div
+        firstDiv.appendChild(secondDiv);
+        // add the div to the <body>
+        placementTarget = document.getElementById("placement");
+        placementTarget.appendChild(firstDiv);
+    }
+
+    // a function that gets us our frame
+    function getFrame(givenId) {
+        // get value from the form
+        let websiteUrl = document.getElementById("ipTarget" + givenId).value;
+        // get iframe tag
+        frameObject = document.getElementById("piViewer" + givenId);
+
+        // show value from form on iframe
+        frameObject.src = websiteUrl;
+    }
+
+    // a function that should update the css grid
+    function updateGrid() {
+        // get the grid placement id
+        gridTarget = document.getElementById("placement");
+
+        // get the value from the input
+        amountPerRow = document.getElementById("frameMaximum").value;
+
+        if      (amountPerRow == 1) {
+            gridTarget.style.gridTemplateColumns = "1fr";
+        }
+        else if (amountPerRow == 2) {
+            gridTarget.style.gridTemplateColumns = "1fr 1fr";
+        }
+        else if (amountPerRow == 3) {
+            gridTarget.style.gridTemplateColumns = "1fr 1fr 1fr";
+        }
+    }
+
+    for (let index = 0; index < 3; index++) {
+        addElement(index);      
+    }
+</script>

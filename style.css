@@ -1,0 +1,29 @@
+.body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.formPart {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.ipTarget {
+    width: 100%
+}
+
+.item {
+    margin: 1em;
+    padding: 1em;
+    
+    background-color: rgb(60, 60, 196);
+
+    border: 1em;
+    border-color: black;
+    border-radius: 1em;
+}
+
+.frame {
+    background-color: white;
+    width: 100%;
+}
